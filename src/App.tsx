@@ -1297,10 +1297,12 @@ export default function App() {
             </div>
           </FadeUp>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="flex justify-center">
+            <div className="w-full max-w-2xl">
             {VIDEO_SHOWCASE_ITEMS.map((item, index) => (
               <VideoCard key={item.id} item={item} index={index} />
             ))}
+            </div>
           </div>
         </section>
 
