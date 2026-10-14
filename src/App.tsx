@@ -33,14 +33,33 @@ import {
 
 import video01 from './assets/images/video_showcase/video_1/video01.mp4';
 
-import pa1Img from './assets/images/regenerated_image_1791972004507.jpg';
-import pa2Img from './assets/images/regenerated_image_1791972007426.jpg';
-import pa4Img from './assets/images/regenerated_image_1791972009250.jpg';
-import pa5Img from './assets/images/regenerated_image_1791972012612.jpg';
-import pa6Img from './assets/images/regenerated_image_1791972015105.jpg';
-import pa7Img from './assets/images/regenerated_image_1791972017215.jpg';
-import ec4Img from './assets/images/regenerated_image_1791972019893.jpg';
-import portraitImg from './assets/images/regenerated_image_1791972021750.jpg';
+// AI product advertising images
+import pa1Img  from './assets/images/pa_01_youmi_shampoo.jpg';
+import pa2Img  from './assets/images/pa_02_versace_perfume.jpg';
+import pa3Img  from './assets/images/pa_03_charlotte_tilbury.jpg';
+import pa4Img  from './assets/images/pa_04_kylie_perfume.jpg';
+import pa5Img  from './assets/images/pa_05_narins_beauty.jpg';
+import pa6Img  from './assets/images/pa_06_poppi_drink.jpg';
+import pa7Img  from './assets/images/pa_07_ifran_mango.jpg';
+import pa8Img  from './assets/images/pa_08_youmi_hairbrush.jpg';
+
+// AI UGC images
+import ugc1Img from './assets/images/ugc_01_youmi_hairset.jpg';
+import ugc4Img from './assets/images/ugc_04_moroccan_oil.jpg';
+
+// AI-assisted graphic design images
+import gd1Img  from './assets/images/gd_01_angelina_paris.jpg';
+import gd2Img  from './assets/images/gd_02_nurri_milkshake.jpg';
+import gd3Img  from './assets/images/gd_03_nurri_milkshake2.jpg';
+import gd4Img  from './assets/images/gd_04_fenty_beauty.jpg';
+
+// E-commerce visuals images
+import ec1Img  from './assets/images/ec_01_ecommerce_visual.jpg';
+import ec3Img  from './assets/images/ec_03_ecommerce_visual.jpg';
+import ec4Img  from './assets/images/ec_04_ecommerce_visual.jpg';
+
+// Portrait
+import portraitImg from './assets/images/portrait_farah.jpg';
 
 export type ProjectSubCategory = 'Beauty' | 'Lifestyle' | 'Food & Beverage';
 
@@ -79,7 +98,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'Charlotte tilbury',
     category: 'AI product advertising',
     subCategory: 'Beauty',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBS-1uCRgQroLOOvyRPTqDpcMgu6b0pdemKW6Lw5e0z3sfmAUFTdtoqeJH6ZDF_35djm94HyUuGYsJywqLEgYCKq3xZz8kFzcZkfqavcshomtSfY7AnLOgayneRS9QjY6EAF1JmJF9WcPmiou1TU-df5EtjwINTND4pdYsmHdJVDEJyjyFfWbfHJ2AzitawKqhUIaZ0H-lMWYs8w2VHEIrYajtj71StkWHStj-Nq_VV-WzofOP5GqkC0Gt6hGh_SWMjcns',
+    image: pa3Img,
     aspectRatio: '4/5',
     number: '03'
   },
@@ -124,7 +143,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'YOUMI BEAUTY HAIR BRUSH',
     category: 'AI product advertising',
     subCategory: 'Beauty',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAaWdYTNltxot8qu157e-i-NXnQ8vql_eNMqa75WvjpaPoKWOT6OkBWi4pZMX_9SH0t1__fKgpaL7hu2Dt7RLgVsr6pGNac-sgaUhB4M7ZBSoJVhf8ozZFqbHN9O--Mvc26PWrXJsljnlvnZKlJYEKLHJhA7PiaH6MA0jW42Gw3BAxe10zsuKEPo7B9MGfSQU5l2ZK3V-72lSsrUppMyhWOS-_u3_P2y63SyG9qEjgjcJpPyfxZ5f6uvLzukVkjLWtKKm4',
+    image: pa8Img,
     aspectRatio: '4/5',
     number: '08'
   },
@@ -135,7 +154,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'YOUMI BEAUTY HAIR SET',
     category: 'AI UGC',
     subCategory: 'Beauty',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD2waeh6KAhEBKlrlUsusFdkIEIik51M3t3SMoCXmw6TUdrgkoClhw07adqgxYdrmzF8oZ_AaAhQnFgzZORhY8PkfgDg3ZMpww6iUXqXSudg4sFrirCxpKXnQ9ji-96CKVt61j9rTiDRI_pLe0RrEpk3ze7Sa3_YKR69SGmkAQpfJ8i30dIQyn4GsMWDi_iXS8QHeZ0ywD8Y2y4u_01zwfYngtF3dgs8Dhods1wAFkmxOyaEXUtP7fsEayNAJgpNymEryw',
+    image: ugc1Img,
     aspectRatio: '4/5',
     number: '01'
   },
@@ -162,7 +181,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'MOROCCAN OIL',
     category: 'AI UGC',
     subCategory: 'Beauty',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDAIEh-GC6ThYN9q8kg3ck_rd4o7mj1fPb0EwpJN5oOD5Y3-8EaiJvhmanKMoVLsQv6lxzGGIuffOO50O19OvtYgpTZ3jMGNuHJbFun4jrz7zj-dGbm4hgVaATjxnacLiOgaG8dNHlczugHrm0OI1UuR_8Z4eANxD8YGzj9jPL7je65t_8mmpUnD2CSqAYbu7aLwbalkJ0P6RdkX7fo12PtM06xv81lzBAgCz99iqh_7skrcScdysob99YoUIpHR-sYyfA',
+    image: ugc4Img,
     aspectRatio: '4/5',
     number: '04'
   },
@@ -173,7 +192,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'ANGELINA PARIS',
     category: 'AI-assisted graphic design',
     subCategory: 'Food & Beverage',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ-qHjOMGBI2vcNZMLEWDMWlKPmpjzkBEWxhG54jXHwVrONgp2ifc5xVEkhavyGqdPGvTv-jFelbMFYFFNOYBkQDdN-kUlthSxviQDCkFCP23KZpgxqAp6eYKueWGfjJ6xzvvHgSb0qC0PLWEiwXnb5619wfAZazgRFieKDVDr6-UJBn4M7e0gaX16ddJt_Dtul5uAxdv2N3JJt9QZc9xiZntbShpjzVsEg_21p_TL-BtrPB46BW9mX428qjPr7qq6veQ',
+    image: gd1Img,
     aspectRatio: '4/5',
     number: '01'
   },
@@ -182,7 +201,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'NURRI MILK SHAKE',
     category: 'AI-assisted graphic design',
     subCategory: 'Food & Beverage',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXoD952G3l9dozW2PwzMR64_8tErwayDW6rp0wnHFNfVu26l_JZs1n_Tz9yhghpkubc_-DfddesAHxeNHTfkqvA9IG1oNHjW6EU0cbFZbe2ZGTXqBFT_GP2VdltXXRfnMMmw12Plq8dFNNw4cQCG3PJc0e5VTZGgLJWyxxILa143Dc7Pqk-lrO8r8c1z6627ue2GrOyOA7-uS_nX9Hn6OG335XStMD1A0C3VsoEocmO5iq4W5Aw75dq5DQDgZWGeWNuhQ',
+    image: gd2Img,
     aspectRatio: '4/5',
     number: '02'
   },
@@ -191,7 +210,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'Nurri milk shake',
     category: 'AI-assisted graphic design',
     subCategory: 'Food & Beverage',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCGFxUHBmWqaX-OR3sRiDYUb7E0Q6rdZgTW1IhCAIL_W0qKwcUEB8yrYQ3taBtZGtzF4aotdNmz-zleD-0yobUDiUQUKrNtH5A4mRl187S94QD35Bql-LMByEOn0XSlT-7gtHGTBc7HUPrISz4lB03ta0M0tSsMRQox7fZ1A_sRdcJBAV2VhfEXcW0NUmYd5kPrdxhY-Q7WC8NshDW1swLltfYGesqpUKcoHj0hciOSaTKifHgDRCscI_XTWd0eGqIc4n8',
+    image: gd3Img,
     aspectRatio: '4/5',
     number: '03'
   },
@@ -200,7 +219,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'FENTY BEAUTY',
     category: 'AI-assisted graphic design',
     subCategory: 'Beauty',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_t_ALuv8tCxhXp7tPrZB2C17gBqylyzKoZCOXLreM7NeDY_yacBHS8lXlSKdcpgW6_Mt_eaRmT9RRfEPYUZw6nH34aTwCbj8Bgzm0CRufAOL_6wpTcabtooNkqErY0mgItYU9WrwL27a21ei4vqXpsp1T18GI9EoGI4Okn7ujlEWfx6jxNUG0XPL6Lew7coJcTFD0MfYxin2K0ofvsAgrC93O2Ag-bA-TD0X6jwTo9xqtSi-hlB05GeGHcV5IMV7nhoM',
+    image: gd4Img,
     aspectRatio: '4/5',
     number: '04'
   },
@@ -211,7 +230,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'E-commerce',
     category: 'AI-Powered E-commerce Visuals',
     subCategory: 'Lifestyle',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDgxer6xYUB_bjYmpLKBZsp7ZDJyjrnhGOk1VfCX8_E06Di2P3UEq-CYf1DO2vCubAu4u4hJNcPQzyb0lN8TfSQJIzWHhVbMLLuBSuFepu3AigS-RFXM29pkfXic1Jf64Zby2iXB5Q6MaPlnEkMbKrD7rntHeiPx5ff75honbGRH0L9uOyNHNS8XAYNc48ArBCTiYwcZW5ta_KmAde-BWSXG6cMCwdeinR--gagBLxgnxPb9hNIN5kA0lBERdYVzwg37Xg',
+    image: ec1Img,
     aspectRatio: '4/5',
     number: '01'
   },
@@ -229,7 +248,7 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     title: 'E-commerce',
     category: 'AI-Powered E-commerce Visuals',
     subCategory: 'Lifestyle',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDCqzfRb3zyF74zFqssIX0q5UVcpfiKcLvf1BbvtgI47dOLqBmbMzbcH4321hPm4WWG4wE7-LlIKlq-ojLehkLY0Zd3VbqX5BGsIyKzw4KStWjKrj09_jeycqpmpkvO_9f2oPPIh0a7rpJig3WaQDKBaAMfEeSvVTNogFW8CTs-i-HUkpto0OCHRfcL7upEQc4H-RAyxxQckKAN4Dgqsqsw2i-NtZGvlpJnSysU6uAFBum3wny_J8Tie0S5zySnQTffAqU',
+    image: ec3Img,
     aspectRatio: '4/5',
     number: '03'
   },
