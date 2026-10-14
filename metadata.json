@@ -1,0 +1,6 @@
+{
+  "name": "Farah El Delbani Portfolio",
+  "description": "Portfolio of Farah El Delbani, AI Visual Content Creator specializing in AI product advertising, UGC visuals, and creative campaigns.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
