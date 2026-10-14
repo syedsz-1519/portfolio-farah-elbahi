@@ -673,95 +673,86 @@ export default function App() {
         aria-valuemax={100}
       />
 
-      {/* Sticky Minimal Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-[#3A080B]/90 border-b border-[#B79A6B]/20 transition-all duration-300">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-          <a 
-            href="#" 
-            className="font-serif text-lg md:text-xl tracking-[0.18em] text-[#F3E9DC] hover:text-[#B79A6B] transition font-normal uppercase"
-          >
-            FARAH EL DELBANI
+      {/* ── ENHANCED NAVBAR ── */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#250406]/85 border-b border-[#B79A6B]/25 transition-all duration-300 shadow-[0_2px_24px_rgba(20,2,4,0.55)]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 h-[72px] flex items-center justify-between gap-6">
+
+          {/* Logo mark */}
+          <a href="#" className="flex items-center gap-3 group shrink-0">
+            <div className="flex flex-col items-start">
+              <span className="font-serif text-base md:text-lg tracking-[0.22em] text-[#F3E9DC] group-hover:text-[#D4BC8F] transition duration-300 uppercase leading-none">
+                Farah El Delbani
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.3em] text-[#B79A6B] mt-0.5 font-medium">
+                AI Visual Content Creator
+              </span>
+            </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-[12px] uppercase tracking-[0.18em] text-[#CDBFAE] font-medium">
-            <a href="#tools" className="nav-link hover:text-[#F3E9DC] transition">Tools</a>
-            <a href="#ai-product-advertising" className="nav-link hover:text-[#F3E9DC] transition">AI product advertising</a>
-            <a href="#imaginative-campaign-concepts" className="nav-link hover:text-[#F3E9DC] transition">Imaginative campaign concepts</a>
-            <a href="#ai-assisted-graphic-design" className="nav-link hover:text-[#F3E9DC] transition">AI-assisted graphic design</a>
-            <a href="#ai-powered-ecommerce" className="nav-link hover:text-[#F3E9DC] transition">AI-Powered E-commerce Visuals</a>
-            <a href="#video-showcase" className="nav-link hover:text-[#F3E9DC] transition">Video Showcase</a>
-            <a 
-              href="#contact" 
-              className="ml-3 px-5 py-2.5 rounded-full border border-[#B79A6B] text-[#B79A6B] hover:bg-[#B79A6B] hover:text-[#3A080B] transition duration-300 text-[11px] font-medium tracking-[0.15em]"
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-1 text-[11px] uppercase tracking-[0.15em] text-[#CDBFAE] font-medium">
+            {[
+              { href: '#tools', label: 'Tools' },
+              { href: '#ai-product-advertising', label: 'AI Ads' },
+              { href: '#imaginative-campaign-concepts', label: 'Campaigns' },
+              { href: '#ai-assisted-graphic-design', label: 'Design' },
+              { href: '#ai-powered-ecommerce', label: 'E-commerce' },
+              { href: '#video-showcase', label: 'Video' },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="nav-link px-3 py-1.5 rounded-lg hover:text-[#F3E9DC] hover:bg-[#B79A6B]/10 transition duration-200"
+              >
+                {label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              className="ml-3 px-5 py-2 rounded-full bg-[#B79A6B] text-[#250406] hover:bg-[#D4BC8F] transition duration-300 text-[11px] font-semibold tracking-[0.12em] shadow-md shadow-black/30"
             >
-              Excited to work together!
+              Let's Work Together
             </a>
           </nav>
 
-          {/* Mobile Hamburger Button */}
-          <button 
+          {/* Mobile hamburger */}
+          <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-[#F3E9DC] hover:text-[#B79A6B] p-2 transition focus:outline-none focus:ring-1 focus:ring-[#B79A6B]"
+            className="lg:hidden text-[#F3E9DC] hover:text-[#B79A6B] p-2 transition focus:outline-none focus:ring-1 focus:ring-[#B79A6B] rounded"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
-        {/* Mobile Drawer Menu */}
+        {/* Mobile drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#3A080B]/98 border-b border-[#B79A6B]/20 px-6 py-8 flex flex-col gap-4 text-xs uppercase tracking-[0.18em] animate-in slide-in-from-top-4 duration-200">
-            <a 
-              href="#tools" 
+          <div className="lg:hidden bg-[#250406]/98 border-b border-[#B79A6B]/20 px-6 py-6 flex flex-col gap-3 text-xs uppercase tracking-[0.18em] animate-in slide-in-from-top-4 duration-200">
+            {[
+              { href: '#tools', label: 'Tools' },
+              { href: '#ai-product-advertising', label: 'AI Product Advertising' },
+              { href: '#imaginative-campaign-concepts', label: 'Imaginative Campaigns' },
+              { href: '#ai-assisted-graphic-design', label: 'AI-Assisted Graphic Design' },
+              { href: '#ai-powered-ecommerce', label: 'E-commerce Visuals' },
+              { href: '#video-showcase', label: 'Video Showcase' },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-2 border-b border-[#B79A6B]/10"
+              >
+                {label}
+              </a>
+            ))}
+            <a
+              href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
+              className="mt-3 text-center py-3 px-6 rounded-full bg-[#B79A6B] text-[#250406] font-semibold tracking-wider hover:bg-[#D4BC8F] transition"
             >
-              Tools
-            </a>
-            <a 
-              href="#ai-product-advertising" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
-            >
-              AI product advertising
-            </a>
-            <a 
-              href="#imaginative-campaign-concepts" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
-            >
-              Imaginative campaign concepts
-            </a>
-            <a 
-              href="#ai-assisted-graphic-design" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
-            >
-              AI-assisted graphic design
-            </a>
-            <a 
-              href="#ai-powered-ecommerce" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
-            >
-              AI-Powered E-commerce Visuals
-            </a>
-            <a 
-              href="#video-showcase" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
-            >
-              Video Showcase
-            </a>
-            <a 
-              href="#contact" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-3 text-center py-3 px-6 rounded-full bg-[#B79A6B] text-[#3A080B] font-semibold tracking-wider hover:bg-[#D4BC8F] transition"
-            >
-              Excited to work together!
+              Let's Work Together
             </a>
           </div>
         )}
@@ -770,110 +761,166 @@ export default function App() {
       {/* Main Container */}
       <main className="max-w-[1200px] mx-auto px-6 md:px-12">
 
-        {/* HERO SECTION */}
-        <section className="py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left: Bio, Name & Role lines */}
-            <div className="lg:col-span-7 flex flex-col gap-6 order-2 lg:order-1">
-              
-              {/* 1. Name and portfolio badge - fades up FIRST */}
+        {/* ── ENHANCED HERO SECTION ── */}
+        <section className="relative py-20 md:py-28 overflow-hidden">
+
+          {/* Decorative background orbs */}
+          <div className="pointer-events-none absolute -top-32 -right-40 w-[520px] h-[520px] rounded-full bg-[#B79A6B]/5 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 -left-32 w-[380px] h-[380px] rounded-full bg-[#B79A6B]/5 blur-[100px]" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center relative z-10">
+
+            {/* ── LEFT: Text content ── */}
+            <div className="lg:col-span-7 flex flex-col gap-7 order-2 lg:order-1">
+
+              {/* Eyebrow label */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                className="flex items-center gap-3"
+              >
+                <div className="w-10 h-[1px] bg-gradient-to-r from-[#B79A6B] to-[#D4BC8F]" />
+                <span className="text-[10px] uppercase tracking-[0.35em] text-[#B79A6B] font-semibold">
+                  AI Visual Portfolio
+                </span>
+              </motion.div>
+
+              {/* Name */}
               <motion.div
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.85, 
-                  ease: [0.22, 1, 0.36, 1], 
-                  delay: 0.15 
-                }}
-                className="flex flex-col gap-3"
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
               >
-                <div className="inline-flex items-center gap-3">
-                  <span className="w-8 h-[1px] bg-[#B79A6B]"></span>
-                  <span className="text-[11px] uppercase tracking-[0.25em] text-[#B79A6B] font-medium">Portfolio</span>
-                </div>
-
-                <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[76px] leading-[1.08] tracking-tight text-[#F3E9DC]">
-                  FARAH EL DELBANI
+                <h1 className="font-serif leading-[1.04] tracking-tight text-[#F3E9DC]"
+                  style={{ fontSize: 'clamp(2.6rem, 6.5vw, 5.2rem)' }}>
+                  Farah
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4BC8F] via-[#F3E9DC] to-[#B79A6B]">
+                    El Delbani
+                  </span>
                 </h1>
               </motion.div>
 
-              {/* 2. Intro text & Role lines - fades up SECOND */}
-              <motion.div
-                initial={{ opacity: 0, y: 28 }}
+              {/* Bio */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.85, 
-                  ease: [0.22, 1, 0.36, 1], 
-                  delay: 0.38 
-                }}
-                className="flex flex-col gap-5"
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.38 }}
+                className="text-[#CDBFAE] text-base md:text-lg leading-relaxed font-light max-w-lg"
               >
-                <p className="text-[#CDBFAE] text-base md:text-lg leading-relaxed font-light max-w-xl">
-                  I'm Farah El Delbani, an AI content creator, specializing in creating unique, high-quality AI visuals for brands.My work includes several creative directions, AI product advertising, realistic AI UGC-style content, AI-assisted graphic design, and artistic imaginative campaign concepts.
-                </p>
+                I'm an AI content creator specialising in high-quality AI visuals for brands — from product advertising and UGC-style content to graphic design and imaginative campaign concepts.
+              </motion.p>
 
-                {/* Exact Role Lines */}
-                <div className="pt-2 flex flex-col gap-2.5 text-xs md:text-sm tracking-wider text-[#F3E9DC] font-light border-l-2 border-[#B79A6B]/40 pl-4 my-1">
-                  <div>-AI Visual Content Creator</div>
-                  <div>-Location: Based in Lebanon| Available for remote projects worldwide</div>
-                  <div className="text-[#CDBFAE]">
-                    -Email: <a href="mailto:farahaldelbani@icloud.com" className="text-[#D4BC8F] hover:underline">farahaldelbani@icloud.com</a>
+              {/* Info tags */}
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.52 }}
+                className="flex flex-col gap-0 divide-y divide-[#B79A6B]/15 border border-[#B79A6B]/20 rounded-2xl overflow-hidden bg-[#4A0F13]/40 backdrop-blur-sm"
+              >
+                {[
+                  { label: 'Role', value: 'AI Visual Content Creator' },
+                  { label: 'Location', value: 'Lebanon · Remote worldwide' },
+                  { label: 'Email', value: 'farahaldelbani@icloud.com', href: 'mailto:farahaldelbani@icloud.com' },
+                  { label: 'WhatsApp', value: '+961 70 37 80 80', href: 'https://wa.me/96170378080' },
+                ].map(({ label, value, href }) => (
+                  <div key={label} className="flex items-center gap-4 px-5 py-3">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#B79A6B] font-semibold w-20 shrink-0">{label}</span>
+                    {href ? (
+                      <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
+                        className="text-xs md:text-sm text-[#D4BC8F] hover:text-[#F3E9DC] transition truncate font-light tracking-wide">
+                        {value}
+                      </a>
+                    ) : (
+                      <span className="text-xs md:text-sm text-[#F3E9DC]/80 font-light tracking-wide">{value}</span>
+                    )}
                   </div>
-                  <div className="text-[#CDBFAE]">
-                    -WhatsApp number: <a href="https://wa.me/96170378080" target="_blank" rel="noopener noreferrer" className="text-[#D4BC8F] hover:underline">(+961 70 37 80 80)</a>
-                  </div>
-                </div>
+                ))}
               </motion.div>
 
-              {/* 4. Primary CTA Button - fades up AFTER portrait */}
+              {/* CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.8, 
-                  ease: [0.22, 1, 0.36, 1], 
-                  delay: 0.92 
-                }}
-                className="pt-3"
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.72 }}
+                className="flex flex-wrap items-center gap-4 pt-1"
               >
-                <a 
-                  href="#contact" 
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#B79A6B] text-[#3A080B] font-medium text-xs md:text-sm uppercase tracking-[0.16em] hover:bg-[#D4BC8F] transition duration-300 shadow-lg shadow-black/40 hover:shadow-[#B79A6B]/20"
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#B79A6B] to-[#D4BC8F] text-[#250406] font-semibold text-xs uppercase tracking-[0.18em] hover:opacity-90 transition duration-300 shadow-lg shadow-black/40"
                 >
-                  Excited to work together!
+                  Let's Work Together
                   <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href="#ai-product-advertising"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#B79A6B]/50 text-[#D4BC8F] hover:border-[#B79A6B] hover:text-[#F3E9DC] hover:bg-[#B79A6B]/10 transition duration-300 text-xs uppercase tracking-[0.18em] font-medium"
+                >
+                  View Portfolio
                 </a>
               </motion.div>
             </div>
 
-            {/* 3. Right: Arched Portrait Frame - fades up THIRD (before CTA) */}
-            <motion.div 
-              initial={{ opacity: 0, y: 36, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ 
-                duration: 0.9, 
-                ease: [0.22, 1, 0.36, 1], 
-                delay: 0.65 
-              }}
+            {/* ── RIGHT: Portrait ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 30, scale: 0.97 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
               className="lg:col-span-5 flex justify-center lg:justify-end order-1 lg:order-2"
             >
-              <div className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[390px]">
-                {/* Antique gold back ring */}
-                <div className="absolute -inset-2 rounded-[146px_146px_28px_28px] border border-[#B79A6B]/30 pointer-events-none transform -rotate-1"></div>
-                
-                <div className="portrait-mask shadow-2xl bg-transparent">
-                  <img 
-                    src={portraitImg} 
-                    alt="Farah El Delbani – AI Visual Content Creator" 
-                    className="w-full h-[420px] sm:h-[460px] md:h-[500px] object-cover object-top block transition duration-500"
+              <div className="relative w-full max-w-[300px] sm:max-w-[340px] md:max-w-[380px]">
+
+                {/* Glow behind portrait */}
+                <div className="absolute inset-0 rounded-[140px_140px_24px_24px] bg-[#B79A6B]/12 blur-2xl scale-110 pointer-events-none" />
+
+                {/* Outer decorative ring */}
+                <div className="absolute -inset-3 rounded-[150px_150px_30px_30px] border border-[#B79A6B]/20 pointer-events-none -rotate-1" />
+                {/* Inner ring */}
+                <div className="absolute -inset-1 rounded-[142px_142px_26px_26px] border border-[#B79A6B]/35 pointer-events-none rotate-1" />
+
+                {/* Portrait frame */}
+                <div className="portrait-mask shadow-[0_32px_80px_rgba(10,1,2,0.75)] relative">
+                  <img
+                    src={portraitImg}
+                    alt="Farah El Delbani – AI Visual Content Creator"
+                    className="w-full h-[440px] sm:h-[480px] md:h-[520px] object-cover object-top block"
                   />
-                  <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4BC8F]/95 px-3.5 py-1 bg-[#250406]/90 rounded-full border border-[#B79A6B]/40 shadow-md">
+                  {/* Subtle bottom fade */}
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#250406]/60 to-transparent pointer-events-none" />
+                  {/* Name tag */}
+                  <div className="absolute bottom-5 left-0 right-0 flex justify-center pointer-events-none">
+                    <span className="text-[10px] uppercase tracking-[0.28em] text-[#D4BC8F] px-4 py-1.5 bg-[#250406]/85 backdrop-blur-sm rounded-full border border-[#B79A6B]/45 shadow-lg">
                       AI Visual Content Creator
                     </span>
                   </div>
                 </div>
+
+                {/* Floating stat badge */}
+                <motion.div
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
+                  className="absolute -left-6 top-1/3 bg-[#4A0F13] border border-[#B79A6B]/40 rounded-xl px-4 py-3 shadow-xl backdrop-blur-sm"
+                >
+                  <p className="text-[10px] uppercase tracking-widest text-[#B79A6B] font-semibold">Based in</p>
+                  <p className="text-sm text-[#F3E9DC] font-serif mt-0.5">Lebanon</p>
+                </motion.div>
+
+                {/* Floating availability badge */}
+                <motion.div
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 1.05 }}
+                  className="absolute -right-4 bottom-20 bg-[#4A0F13] border border-[#B79A6B]/40 rounded-xl px-4 py-3 shadow-xl backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <p className="text-[10px] uppercase tracking-widest text-[#B79A6B] font-semibold">Available</p>
+                  </div>
+                  <p className="text-xs text-[#F3E9DC] mt-0.5 font-light">Remote Worldwide</p>
+                </motion.div>
+
               </div>
             </motion.div>
 
