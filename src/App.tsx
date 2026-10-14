@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'motion/react';
 import { 
   Mail, 
@@ -23,8 +23,15 @@ import {
   RotateCcw,
   Filter,
   ChevronDown,
-  Check
+  Check,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2
 } from 'lucide-react';
+
+import video01 from './assets/images/video_showcase/video_1/video01.mp4';
 
 import pa1Img from './assets/images/regenerated_image_1791972004507.jpg';
 import pa2Img from './assets/images/regenerated_image_1791972007426.jpg';
@@ -236,6 +243,198 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     number: '04'
   }
 ];
+
+interface VideoShowcaseItem {
+  id: string;
+  title: string;
+  description: string;
+  src: string;
+  number: string;
+}
+
+const VIDEO_SHOWCASE_ITEMS: VideoShowcaseItem[] = [
+  {
+    id: 'video-01',
+    title: 'AI Video Showcase',
+    description: 'AI-crafted motion content — a visual campaign concept demonstrating the creative potential of AI video generation.',
+    src: video01,
+    number: '01'
+  }
+];
+
+/**
+ * VideoCard — Luxury styled video player card with custom controls
+ */
+const VideoCard = ({ item, index }: { item: VideoShowcaseItem; index: number }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { v.play(); setIsPlaying(true); }
+    else { v.pause(); setIsPlaying(false); }
+  };
+
+  const toggleMute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setIsMuted(v.muted);
+  };
+
+  const handleTimeUpdate = () => {
+    const v = videoRef.current;
+    if (!v || !v.duration) return;
+    setProgress((v.currentTime / v.duration) * 100);
+  };
+
+  const handleLoadedMetadata = () => {
+    const v = videoRef.current;
+    if (v) setDuration(v.duration);
+  };
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const v = videoRef.current;
+    if (!v) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    v.currentTime = ratio * v.duration;
+  };
+
+  const handleEnded = () => setIsPlaying(false);
+
+  const handleFullscreen = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.requestFullscreen) v.requestFullscreen();
+  };
+
+  const formatTime = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <FadeUp delay={index * 0.1} className="w-full">
+      <div className="rounded-2xl overflow-hidden bg-[#4A0F13] border border-[#B79A6B]/30 shadow-2xl hover:border-[#B79A6B]/70 transition-all duration-400 group">
+        
+        {/* Video */}
+        <div className="relative w-full aspect-video bg-[#250406] cursor-pointer" onClick={togglePlay}>
+          <video
+            ref={videoRef}
+            src={item.src}
+            className="w-full h-full object-cover"
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onEnded={handleEnded}
+            playsInline
+            preload="metadata"
+          />
+
+          {/* Centre play overlay shown when paused */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#B79A6B]/90 flex items-center justify-center shadow-xl backdrop-blur-sm hover:bg-[#D4BC8F] transition group-hover:scale-105">
+                <Play className="w-7 h-7 md:w-8 md:h-8 text-[#3A080B] ml-1" fill="currentColor" />
+              </div>
+            </div>
+          )}
+
+          {/* Number badge */}
+          <div className="absolute top-3 left-3 text-[11px] font-mono text-[#D4BC8F] bg-[#3A080B]/80 border border-[#B79A6B]/40 px-2.5 py-0.5 rounded">
+            {item.number}
+          </div>
+        </div>
+
+        {/* Custom Control Bar */}
+        <div className="px-4 pt-3 pb-2 flex flex-col gap-2 bg-[#3A080B]/60">
+          {/* Progress track */}
+          <div
+            className="w-full h-1 bg-[#B79A6B]/20 rounded-full cursor-pointer relative group/bar"
+            onClick={handleSeek}
+            role="slider"
+            aria-label="Video progress"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
+            <div
+              className="h-full bg-gradient-to-r from-[#B79A6B] to-[#D4BC8F] rounded-full transition-all duration-100"
+              style={{ width: `${progress}%` }}
+            />
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#D4BC8F] border-2 border-[#B79A6B] shadow opacity-0 group-hover/bar:opacity-100 transition -ml-1.5"
+              style={{ left: `${progress}%` }}
+            />
+          </div>
+
+          {/* Controls row */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={togglePlay}
+                className="text-[#F3E9DC] hover:text-[#B79A6B] transition"
+                aria-label={isPlaying ? 'Pause video' : 'Play video'}
+              >
+                {isPlaying
+                  ? <Pause className="w-4 h-4" fill="currentColor" />
+                  : <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
+                }
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleMute}
+                className="text-[#F3E9DC] hover:text-[#B79A6B] transition"
+                aria-label={isMuted ? 'Unmute' : 'Mute'}
+              >
+                {isMuted
+                  ? <VolumeX className="w-4 h-4" />
+                  : <Volume2 className="w-4 h-4" />
+                }
+              </button>
+
+              <span className="text-[10px] font-mono text-[#CDBFAE]/70 tabular-nums">
+                {formatTime((progress / 100) * duration)} / {formatTime(duration)}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleFullscreen}
+              className="text-[#CDBFAE]/70 hover:text-[#B79A6B] transition"
+              aria-label="Enter fullscreen"
+            >
+              <Maximize2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Caption */}
+        <div className="px-5 py-4 border-t border-[#B79A6B]/15 flex items-start justify-between gap-3">
+          <div className="flex flex-col gap-1 min-w-0">
+            <span className="font-serif text-sm md:text-base tracking-[0.12em] text-[#F3E9DC] uppercase font-medium truncate">
+              {item.title}
+            </span>
+            <span className="text-[11px] text-[#CDBFAE]/70 leading-relaxed">
+              {item.description}
+            </span>
+          </div>
+          <span className="text-[10px] uppercase tracking-wider text-[#B79A6B] bg-[#3A080B]/60 border border-[#B79A6B]/30 px-2.5 py-1 rounded-full shrink-0">
+            AI Video
+          </span>
+        </div>
+
+      </div>
+    </FadeUp>
+  );
+};
 
 /**
  * Editorial Decorative Divider
@@ -472,6 +671,7 @@ export default function App() {
             <a href="#imaginative-campaign-concepts" className="nav-link hover:text-[#F3E9DC] transition">Imaginative campaign concepts</a>
             <a href="#ai-assisted-graphic-design" className="nav-link hover:text-[#F3E9DC] transition">AI-assisted graphic design</a>
             <a href="#ai-powered-ecommerce" className="nav-link hover:text-[#F3E9DC] transition">AI-Powered E-commerce Visuals</a>
+            <a href="#video-showcase" className="nav-link hover:text-[#F3E9DC] transition">Video Showcase</a>
             <a 
               href="#contact" 
               className="ml-3 px-5 py-2.5 rounded-full border border-[#B79A6B] text-[#B79A6B] hover:bg-[#B79A6B] hover:text-[#3A080B] transition duration-300 text-[11px] font-medium tracking-[0.15em]"
@@ -529,6 +729,13 @@ export default function App() {
               className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
             >
               AI-Powered E-commerce Visuals
+            </a>
+            <a 
+              href="#video-showcase" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-[#CDBFAE] hover:text-[#B79A6B] transition py-1.5"
+            >
+              Video Showcase
             </a>
             <a 
               href="#contact" 
@@ -1056,6 +1263,26 @@ export default function App() {
               </div>
             );
           })()}
+        </section>
+
+        {/* EDITORIAL DIVIDER */}
+        <EditorialDivider />
+
+        {/* 5. VIDEO SHOWCASE */}
+        <section id="video-showcase" className="py-14 md:py-18">
+          <FadeUp className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-5">
+            <div>
+              <h2 className="font-serif text-3xl md:text-5xl text-[#F3E9DC] tracking-wide">Video Showcase</h2>
+              <h3 className="text-xs md:text-sm uppercase tracking-[0.25em] text-[#B79A6B] font-medium mt-3">AI Motion Content</h3>
+              <div className="w-16 h-[2px] bg-[#B79A6B] mt-4"></div>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {VIDEO_SHOWCASE_ITEMS.map((item, index) => (
+              <VideoCard key={item.id} item={item} index={index} />
+            ))}
+          </div>
         </section>
 
         {/* EDITORIAL DIVIDER */}
