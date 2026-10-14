@@ -456,6 +456,147 @@ const VideoCard = ({ item, index }: { item: VideoShowcaseItem; index: number }) 
 };
 
 /**
+ * MobileCarousel — touch-swipeable carousel for mobile, invisible on sm+ screens
+ */
+const MobileCarousel = ({ items, onOpen }: { items: PortfolioItem[]; onOpen: (id: string) => void }) => {
+  const [current, setCurrent] = useState(0);
+  const startX = useRef<number>(0);
+  const isDragging = useRef(false);
+
+  const prev = () => setCurrent(c => (c - 1 + items.length) % items.length);
+  const next = () => setCurrent(c => (c + 1) % items.length);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+    isDragging.current = true;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging.current) return;
+    const diff = startX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+    isDragging.current = false;
+  };
+
+  const item = items[current];
+
+  return (
+    <div className="relative w-full select-none" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {/* Card */}
+      <motion.div
+        key={item.id}
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -30 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={() => onOpen(item.id)}
+        className="art-card cursor-pointer w-full"
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(item.id); }}
+        aria-label={`Open ${item.title}`}
+      >
+        <div className="art-img-wrap aspect-[4/5] relative w-full overflow-hidden bg-[#250406]">
+          <img src={item.image} alt={item.title} className="art-img w-full h-full object-cover object-center" loading="lazy" />
+          <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-[#3A080B] via-[#3A080B]/60 to-transparent flex items-center justify-between">
+            <span className="text-[10px] uppercase tracking-wider text-[#D4BC8F] bg-[#3A080B]/85 px-2.5 py-1 rounded-md border border-[#B79A6B]/30 font-medium">
+              {item.subCategory}
+            </span>
+            <span className="text-[10px] uppercase tracking-widest text-[#3A080B] bg-[#B79A6B] px-3 py-1 rounded-full font-semibold flex items-center gap-1">
+              <ZoomIn className="w-3 h-3" /> View
+            </span>
+          </div>
+        </div>
+        <div className="h-[60px] px-4 py-2.5 bg-[#4A0F13] rounded-b-[15px] flex items-center justify-between border-t border-[#B79A6B]/20">
+          <div className="flex flex-col min-w-0 pr-2">
+            <span className="font-serif text-xs tracking-[0.12em] text-[#F3E9DC] uppercase font-medium truncate">{item.title}</span>
+            <span className="text-[10px] text-[#B79A6B]/80 uppercase tracking-wider font-medium">{item.subCategory}</span>
+          </div>
+          {item.number && (
+            <span className="text-[11px] text-[#D4BC8F] font-mono font-medium px-2 py-0.5 rounded border border-[#B79A6B]/35 bg-[#3A080B]/60 shrink-0">{item.number}</span>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Prev / Next arrows */}
+      {items.length > 1 && (
+        <>
+          <button
+            type="button" onClick={prev}
+            className="absolute left-2 top-[40%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#3A080B]/80 border border-[#B79A6B]/50 flex items-center justify-center text-[#F3E9DC] hover:bg-[#B79A6B] hover:text-[#3A080B] transition shadow-lg"
+            aria-label="Previous"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            type="button" onClick={next}
+            className="absolute right-2 top-[40%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[#3A080B]/80 border border-[#B79A6B]/50 flex items-center justify-center text-[#F3E9DC] hover:bg-[#B79A6B] hover:text-[#3A080B] transition shadow-lg"
+            aria-label="Next"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </>
+      )}
+
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-1.5 mt-4">
+        {items.map((_, i) => (
+          <button
+            key={i} type="button"
+            onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-[#B79A6B]' : 'w-1.5 bg-[#B79A6B]/35'}`}
+          />
+        ))}
+      </div>
+
+      {/* Counter */}
+      <p className="text-center text-[11px] text-[#CDBFAE]/60 mt-2 font-mono tracking-wider">
+        {current + 1} / {items.length}
+      </p>
+    </div>
+  );
+};
+
+/**
+ * SectionGrid — shows MobileCarousel on mobile, grid on sm+
+ */
+const SectionGrid = ({ items, onOpen, gridClass, onClearFilter, selectedFilter }: {
+  items: PortfolioItem[];
+  onOpen: (id: string) => void;
+  gridClass: string;
+  onClearFilter: () => void;
+  selectedFilter: string;
+}) => {
+  if (items.length === 0) {
+    return (
+      <div className="p-8 text-center bg-[#4A0F13]/40 rounded-2xl border border-[#B79A6B]/20">
+        <p className="text-xs md:text-sm text-[#CDBFAE] tracking-wider uppercase font-light">
+          No {selectedFilter} samples in this section.
+        </p>
+        <button type="button" onClick={onClearFilter}
+          className="mt-3 text-xs text-[#B79A6B] hover:text-[#D4BC8F] underline tracking-widest uppercase cursor-pointer">
+          View all samples
+        </button>
+      </div>
+    );
+  }
+  return (
+    <>
+      {/* Mobile: carousel */}
+      <div className="sm:hidden">
+        <MobileCarousel items={items} onOpen={onOpen} />
+      </div>
+      {/* sm+: grid */}
+      <div className={`hidden sm:grid ${gridClass}`}>
+        {items.map((item, index) => (
+          <ArtworkCard key={item.id} item={item} onOpen={onOpen} index={index} />
+        ))}
+      </div>
+    </>
+  );
+};
+
+/**
  * Editorial Decorative Divider
  * Adds an antique gold hairline with center diamond emblems for luxury editorial print feel
  */
@@ -846,19 +987,25 @@ export default function App() {
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.72 }}
                 className="flex flex-wrap items-center gap-4 pt-1"
               >
-                <a
+                <motion.a
                   href="#contact"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#B79A6B] to-[#D4BC8F] text-[#250406] font-semibold text-xs uppercase tracking-[0.18em] hover:opacity-90 transition duration-300 shadow-lg shadow-black/40"
+                  whileHover={{ scale: 1.04, boxShadow: '0 8px 32px rgba(183,154,107,0.35)' }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: 'spring', stiffness: 340, damping: 22 }}
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#B79A6B] to-[#D4BC8F] text-[#250406] font-semibold text-xs uppercase tracking-[0.18em] shadow-lg shadow-black/40"
                 >
                   Let's Work Together
                   <ArrowRight className="w-4 h-4" />
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="#ai-product-advertising"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#B79A6B]/50 text-[#D4BC8F] hover:border-[#B79A6B] hover:text-[#F3E9DC] hover:bg-[#B79A6B]/10 transition duration-300 text-xs uppercase tracking-[0.18em] font-medium"
+                  whileHover={{ scale: 1.04, borderColor: '#B79A6B', backgroundColor: 'rgba(183,154,107,0.1)' }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: 'spring', stiffness: 340, damping: 22 }}
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#B79A6B]/50 text-[#D4BC8F] hover:text-[#F3E9DC] transition duration-300 text-xs uppercase tracking-[0.18em] font-medium"
                 >
                   View Portfolio
-                </a>
+                </motion.a>
               </motion.div>
             </div>
 
@@ -1149,34 +1296,7 @@ export default function App() {
 
           {(() => {
             const items = PORTFOLIO_ITEMS.filter(item => item.category === 'AI product advertising' && (selectedFilter === 'All' || item.subCategory === selectedFilter));
-            if (items.length === 0) {
-              return (
-                <div className="p-8 text-center bg-[#4A0F13]/40 rounded-2xl border border-[#B79A6B]/20">
-                  <p className="text-xs md:text-sm text-[#CDBFAE] tracking-wider uppercase font-light">
-                    No {selectedFilter} samples in this section.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFilter('All')}
-                    className="mt-3 text-xs text-[#B79A6B] hover:text-[#D4BC8F] underline tracking-widest uppercase cursor-pointer"
-                  >
-                    View all samples
-                  </button>
-                </div>
-              );
-            }
-            return (
-              <div className={gridClass}>
-                {items.map((item, index) => (
-                  <ArtworkCard 
-                    key={item.id} 
-                    item={item} 
-                    onOpen={openLightboxById} 
-                    index={index} 
-                  />
-                ))}
-              </div>
-            );
+            return <SectionGrid items={items} onOpen={openLightboxById} gridClass={gridClass} onClearFilter={() => setSelectedFilter('All')} selectedFilter={selectedFilter} />;
           })()}
         </section>
 
@@ -1200,34 +1320,7 @@ export default function App() {
 
           {(() => {
             const items = PORTFOLIO_ITEMS.filter(item => item.category === 'AI UGC' && (selectedFilter === 'All' || item.subCategory === selectedFilter));
-            if (items.length === 0) {
-              return (
-                <div className="p-8 text-center bg-[#4A0F13]/40 rounded-2xl border border-[#B79A6B]/20">
-                  <p className="text-xs md:text-sm text-[#CDBFAE] tracking-wider uppercase font-light">
-                    No {selectedFilter} samples in this section.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFilter('All')}
-                    className="mt-3 text-xs text-[#B79A6B] hover:text-[#D4BC8F] underline tracking-widest uppercase cursor-pointer"
-                  >
-                    View all samples
-                  </button>
-                </div>
-              );
-            }
-            return (
-              <div className={gridClass}>
-                {items.map((item, index) => (
-                  <ArtworkCard 
-                    key={item.id} 
-                    item={item} 
-                    onOpen={openLightboxById} 
-                    index={index} 
-                  />
-                ))}
-              </div>
-            );
+            return <SectionGrid items={items} onOpen={openLightboxById} gridClass={gridClass} onClearFilter={() => setSelectedFilter('All')} selectedFilter={selectedFilter} />;
           })()}
         </section>
 
@@ -1250,34 +1343,7 @@ export default function App() {
 
           {(() => {
             const items = PORTFOLIO_ITEMS.filter(item => item.category === 'AI-assisted graphic design' && (selectedFilter === 'All' || item.subCategory === selectedFilter));
-            if (items.length === 0) {
-              return (
-                <div className="p-8 text-center bg-[#4A0F13]/40 rounded-2xl border border-[#B79A6B]/20">
-                  <p className="text-xs md:text-sm text-[#CDBFAE] tracking-wider uppercase font-light">
-                    No {selectedFilter} samples in this section.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFilter('All')}
-                    className="mt-3 text-xs text-[#B79A6B] hover:text-[#D4BC8F] underline tracking-widest uppercase cursor-pointer"
-                  >
-                    View all samples
-                  </button>
-                </div>
-              );
-            }
-            return (
-              <div className={gridClass}>
-                {items.map((item, index) => (
-                  <ArtworkCard 
-                    key={item.id} 
-                    item={item} 
-                    onOpen={openLightboxById} 
-                    index={index} 
-                  />
-                ))}
-              </div>
-            );
+            return <SectionGrid items={items} onOpen={openLightboxById} gridClass={gridClass} onClearFilter={() => setSelectedFilter('All')} selectedFilter={selectedFilter} />;
           })()}
         </section>
 
@@ -1300,34 +1366,7 @@ export default function App() {
 
           {(() => {
             const items = PORTFOLIO_ITEMS.filter(item => item.category === 'AI-Powered E-commerce Visuals' && (selectedFilter === 'All' || item.subCategory === selectedFilter));
-            if (items.length === 0) {
-              return (
-                <div className="p-8 text-center bg-[#4A0F13]/40 rounded-2xl border border-[#B79A6B]/20">
-                  <p className="text-xs md:text-sm text-[#CDBFAE] tracking-wider uppercase font-light">
-                    No {selectedFilter} samples in this section.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFilter('All')}
-                    className="mt-3 text-xs text-[#B79A6B] hover:text-[#D4BC8F] underline tracking-widest uppercase cursor-pointer"
-                  >
-                    View all samples
-                  </button>
-                </div>
-              );
-            }
-            return (
-              <div className={gridClass}>
-                {items.map((item, index) => (
-                  <ArtworkCard 
-                    key={item.id} 
-                    item={item} 
-                    onOpen={openLightboxById} 
-                    index={index} 
-                  />
-                ))}
-              </div>
-            );
+            return <SectionGrid items={items} onOpen={openLightboxById} gridClass={gridClass} onClearFilter={() => setSelectedFilter('All')} selectedFilter={selectedFilter} />;
           })()}
         </section>
 
