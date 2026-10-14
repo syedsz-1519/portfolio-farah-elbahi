@@ -601,7 +601,7 @@ const SectionGrid = ({ items, onOpen, gridClass, onClearFilter, selectedFilter }
  * Adds an antique gold hairline with center diamond emblems for luxury editorial print feel
  */
 const EditorialDivider = ({ className = "" }: { className?: string }) => (
-  <div className={`w-full py-10 md:py-14 flex items-center justify-center gap-4 ${className}`} aria-hidden="true">
+  <div className={`w-full py-5 md:py-7 flex items-center justify-center gap-4 ${className}`} aria-hidden="true">
     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#B79A6B]/40 to-[#B79A6B]/15" />
     <div className="flex items-center gap-2 text-[#B79A6B]/70 select-none">
       <span className="w-1.5 h-1.5 rotate-45 border border-[#B79A6B]/70" />
@@ -953,12 +953,12 @@ export default function App() {
                 I'm an AI content creator specialising in high-quality AI visuals for brands — from product advertising and UGC-style content to graphic design and imaginative campaign concepts.
               </motion.p>
 
-              {/* Info tags */}
+              {/* Info lines — clean, no box */}
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.52 }}
-                className="flex flex-col gap-0 divide-y divide-[#B79A6B]/15 border border-[#B79A6B]/20 rounded-2xl overflow-hidden bg-[#4A0F13]/40 backdrop-blur-sm"
+                className="flex flex-col gap-2"
               >
                 {[
                   { label: 'Role', value: 'AI Visual Content Creator' },
@@ -966,15 +966,15 @@ export default function App() {
                   { label: 'Email', value: 'farahaldelbani@icloud.com', href: 'mailto:farahaldelbani@icloud.com' },
                   { label: 'WhatsApp', value: '+961 70 37 80 80', href: 'https://wa.me/96170378080' },
                 ].map(({ label, value, href }) => (
-                  <div key={label} className="flex items-center gap-4 px-5 py-3">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#B79A6B] font-semibold w-20 shrink-0">{label}</span>
+                  <div key={label} className="flex items-baseline gap-2">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#B79A6B] font-semibold shrink-0">{label} —</span>
                     {href ? (
                       <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                        className="text-xs md:text-sm text-[#D4BC8F] hover:text-[#F3E9DC] transition truncate font-light tracking-wide">
+                        className="text-xs md:text-sm text-[#CDBFAE] hover:text-[#D4BC8F] transition font-light tracking-wide">
                         {value}
                       </a>
                     ) : (
-                      <span className="text-xs md:text-sm text-[#F3E9DC]/80 font-light tracking-wide">{value}</span>
+                      <span className="text-xs md:text-sm text-[#CDBFAE] font-light tracking-wide">{value}</span>
                     )}
                   </div>
                 ))}
